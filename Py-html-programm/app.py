@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import json
 
 app = Flask(__name__)
 
@@ -40,8 +41,27 @@ def home():
 @app.route("/check", methods=["POST"])
 def check():
     password = request.form.get("password")
-    result = password_cheker(password)
-    return render_template("index.html", result=result)
+    name = request.form.get("name")
+    user_data = {"user_name": name, "key_word": password}
+    
+    try:
+        with open("users.json", 'r') as f:
+            content = f.read().strip()
+            users = json.loads(content) if content else []
+    except (FileNotFoundError, json.JSONDecodeError):
+        users = []
+    
+    for person in users:
+        if user_data["user_name"] == person["user_name"]:
+            return render_template("index.html", pass_result=' ', name_result="Username already taken") 
+    
+    users.append(user_data)
+    
+    with open("users.json", 'w') as f:
+        json.dump(users, f)
+    
+    pass_result = password_cheker(password)
+    return render_template("index.html", pass_result=pass_result)
 
 if __name__ == "__main__":
     app.run(debug=True)
