@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -26,6 +26,7 @@ def check_upper(func):
         else: 
             return func(password)
     return wrapper
+
 @check_upper
 @check_digits
 @charachter_limit
@@ -34,12 +35,13 @@ def password_cheker(password: str) -> str:
 
 @app.route("/")
 def home():
-    name = "Boryslav"
-    return render_template("index.html", name=name)
+    return render_template("index.html")
 
-
+@app.route("/check", methods=["POST"])
+def check():
+    password = request.form.get("password")
+    result = password_cheker(password)
+    return render_template("index.html", result=result)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
