@@ -2,9 +2,36 @@
 <html>
 <head>
     <title>My Flask App</title>
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Hello from Flask + HTML + {{ name }}!</h1>
-    <p>This page is rendered using a template.</p>
+    <header class="register-header">
+   <div class="container">
+        <form  action="/check" method="POST" class="form">
+            <h2>Create Account</h2>
+
+            <div class="input-box">
+                <input placeholder="Enter username"  type="text" name="name" required>
+             </div>
+
+            <div class="input-box">
+                <input placeholder="Enter email" type="email" name="email"  required>
+
+            </div>
+
+            <div class="input-box">
+                <input placeholder="Enter password" type="password" name="password"  required>
+              
+            </div>
+
+            <button type="submit">Sign Up</button>
+
+            <p class="login-link">
+                Already have an account? <a href="#">Log In</a>
+            </p>
+        </form>
+    </div>
+    </header>
 </body>
 </html>
