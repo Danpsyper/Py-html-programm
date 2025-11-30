@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>My Flask App</title>
-    <link rel="stylesheet" href="./reset.css">
-    <link rel="stylesheet" href="./style.css">
+   <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header class="register-header">

@@ -1,0 +1,136 @@
+
+body {
+    margin: 0;
+    background: #ffa985; 
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+
+.register-header .container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.form {
+    background: #ffffff;
+    width: 420px;
+    padding: 40px;
+    border-radius: 40px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(255,120,80,0.25);
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+    transition: 0.3s ease;
+}
+
+
+.form::before,
+.form::after {
+    content: '';
+    position: absolute;
+    background: #fff;
+    width: 60px;
+    height: 22px;
+    border-radius: 15px;
+    top: 50px;
+    right: -30px;
+}
+
+.form::after {
+    width: 90px;
+    height: 22px;
+    top: auto;
+    bottom: 50px;
+    left: -40px;
+}
+
+.form h2 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #4e4e4e;
+}
+
+.form:hover {
+    animation-play-state: paused;
+    transform: scale(1.02);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+
+.input-box input {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    outline: none;
+    border-radius: 35px;
+    font-size: 16px;
+    background: #e8f0fe;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.input-box input:focus {
+    background: #d9e7ff;
+    box-shadow: 0 0 10px rgba(66,133,244,0.3);
+}
+
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: #ff835c;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 35px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 6px 18px rgba(255,120,80,0.35);
+}
+
+button:hover {
+    background: #ff7645;
+    transform: translateY(-2px);
+}
+
+
+
+.login-link {
+    margin-top: 15px;
+    font-size: 15px;
+}
+
+.login-link a {
+    color: #ff5e3a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
