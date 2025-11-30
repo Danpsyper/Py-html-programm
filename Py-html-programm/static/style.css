@@ -82,7 +82,7 @@ body {
 
 
 .input-box input {
-    width: 100%;
+    width: 380px;
     padding: 14px 18px;
     border: none;
     outline: none;
@@ -91,7 +91,10 @@ body {
     background: #e8f0fe;
     margin-bottom: 15px;
     transition: 0.3s;
+    
 }
+
+
 
 .input-box input:focus {
     background: #d9e7ff;
