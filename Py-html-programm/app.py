@@ -3,7 +3,7 @@ import json
 
 app = Flask(__name__)
 
-def charachter_limit(func):
+def character_limit(func):
     def wrapper(password):
         if len(password) < 3 or len(password) > 16:
             return "Password must be between 3 and 16 characters"
@@ -21,6 +21,8 @@ def check_digits(func):
 
 def check_upper(func):
     def wrapper(password):
+        if not isinstance(password, str):
+            return "Password invalid"
         if not any(char.isupper() for char in password):
             return "You have to have at least one uppercase letter"
         return func(password)
@@ -28,17 +30,13 @@ def check_upper(func):
 
 @check_upper
 @check_digits
-@charachter_limit
+@character_limit
 def password_checker(password: str) -> str:
     return f"Good, your password is {password} and it's good to go"
 
 @app.route("/")
 def home():
     return render_template("index.html")
-
-@app.route("/login")
-def login_page():
-    return render_template("login_page.html")
 
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -48,42 +46,45 @@ def signup():
     user_data = {"user_name": name, "key_word": password}
 
     try:
-        with open("users.json", 'r') as f:
+        with open("Py-html-programm/users.json", 'r') as f:
             content = f.read().strip()
             users = json.loads(content) if content else []
     except (FileNotFoundError, json.JSONDecodeError):
         users = []
 
     for person in users:
-        if user_data["user_name"] == person["user_name"]:
-            return render_template("index.html", pass_result=' ', name_result="Username already taken")
+        if name == person["user_name"]:
+            return render_template("index.html", pass_result='', name_result="Username already taken")
 
     users.append(user_data)
-    with open("users.json", 'w') as f:
+    with open("Py-html-programm/users.json", 'w') as f:
         json.dump(users, f)
 
     pass_result = password_checker(password)
     return render_template("index.html", pass_result=pass_result)
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST", "GET"])
 def check_login():
-    name = request.form.get("name")
-    password = request.form.get("password")
-    user_data = {"user_name": name, "key_word": password}
+    if request.method == "POST":
+        name = request.form.get("name")
+        password = request.form.get("password")
+        user_data = {"user_name": name, "key_word": password}
 
-    try:
-        with open("users.json", 'r') as f:
-            content = f.read().strip()
-            users = json.loads(content) if content else []
-    except (FileNotFoundError, json.JSONDecodeError):
-        users = []
+        try:
+            with open("Py-html-programm/users.json", 'r') as f:
+                content = f.read().strip()
+                users = json.loads(content) if content else []
+        except (FileNotFoundError, json.JSONDecodeError):
+            users = []
 
-    for person in users:
-        if user_data["user_name"] == person["user_name"] and user_data["key_word"] == person["key_word"]:
-            return render_template("login_page.html", out_put=f"Welcome back, {name}!")
+        for person in users:
+            if user_data["user_name"] == person["user_name"] and user_data["key_word"] == person["key_word"]:
+                return render_template("login_page.html", out_put=f"Welcome back, {name}!")
 
-    return render_template("login_page.html", out_put="This account doesn't exist")
+        return render_template("login_page.html", out_put="This account doesn't exist")
     
+
+    return render_template("login_page.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

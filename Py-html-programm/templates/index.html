@@ -8,7 +8,7 @@
 <body>
     <header class="register-header">
    <div class="container">
-        <form  action="/check" action="{{ url_for('check_login') }}" method="POST" class="form">
+        <form  action="/signup" method="POST" class="form">
             <h2>Create Account</h2>
 
             {% if name_result %}
@@ -18,11 +18,6 @@
             <div class="input-box">
                 <input placeholder="Enter username"  type="text" name="name" required>
              </div>
-
-            <div class="input-box">
-                <input placeholder="Enter email" type="email" name="email"  required>
-
-            </div>
 
             <div class="input-box">
                 <input placeholder="Enter password" type="password" name="password"  required>
@@ -36,7 +31,7 @@
             <button type="submit">Sign Up</button>
             
             <p class="login-link">
-                Already have an account? <a href="{{ url_for('login_page') }}">Log In</a>
+                Already have an account? <a href="{{ url_for('check_login') }}">Log In</a>
             </p>
         </form>
     </div>
