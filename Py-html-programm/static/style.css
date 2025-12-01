@@ -137,3 +137,9 @@ button:hover {
 .login-link a:hover {
     text-decoration: underline;
 }
+
+.error-message {
+    color: #ff0000;
+    margin-top: 10px;
+
+}

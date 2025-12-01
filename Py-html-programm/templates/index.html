@@ -11,8 +11,8 @@
         <form  action="/signup" method="POST" class="form">
             <h2>Create Account</h2>
 
-            {% if name_result %}
-            <p style="color:red; margin-top:10px;">{{ name_result }}</p>
+            {% if name_result or pass_result %}
+            <p class="error-message">{{ name_result or pass_result }}</p>
             {% endif %}
 
             <div class="input-box">
@@ -23,10 +23,6 @@
                 <input placeholder="Enter password" type="password" name="password"  required>
               
             </div>
-            
-            {% if pass_result %}
-            <p style="color:red; margin-top:10px;">{{ pass_result }}</p>
-            {% endif %}
 
             <button type="submit">Sign Up</button>
             

@@ -43,10 +43,10 @@ def signup():
     name = request.form.get("name")
     password = request.form.get("password")
 
-    user_data = {"user_name": name, "key_word": password}
+    user_data = {"user_name": name, "key_word": password, "first_time": True}
 
     try:
-        with open("Py-html-programm/users.json", 'r') as f:
+        with open("users.json", 'r') as f:
             content = f.read().strip()
             users = json.loads(content) if content else []
     except (FileNotFoundError, json.JSONDecodeError):
@@ -57,7 +57,7 @@ def signup():
             return render_template("index.html", pass_result='', name_result="Username already taken")
 
     users.append(user_data)
-    with open("Py-html-programm/users.json", 'w') as f:
+    with open("users.json", 'w') as f:
         json.dump(users, f)
 
     pass_result = password_checker(password)
@@ -68,10 +68,10 @@ def check_login():
     if request.method == "POST":
         name = request.form.get("name")
         password = request.form.get("password")
-        user_data = {"user_name": name, "key_word": password}
+        user_data = {"user_name": name, "key_word": password, "first_time": False}
 
         try:
-            with open("Py-html-programm/users.json", 'r') as f:
+            with open("users.json", 'r') as f:
                 content = f.read().strip()
                 users = json.loads(content) if content else []
         except (FileNotFoundError, json.JSONDecodeError):
@@ -85,6 +85,12 @@ def check_login():
     
 
     return render_template("login_page.html")
+
+# @app.route("/pick_character", methods=["POST"])
+# def first_pick():
+#     character_name = request.get("character_name")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
