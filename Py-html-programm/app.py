@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import json
 
+
 app = Flask(__name__)
+
 
 def character_limit(func):
     def wrapper(password):
@@ -9,6 +11,7 @@ def character_limit(func):
             return "Password must be between 3 and 16 characters"
         return func(password)
     return wrapper
+
 
 def check_digits(func):
     def wrapper(password):
@@ -19,6 +22,7 @@ def check_digits(func):
         return func(password)
     return wrapper
 
+
 def check_upper(func):
     def wrapper(password):
         if not isinstance(password, str):
@@ -28,22 +32,27 @@ def check_upper(func):
         return func(password)
     return wrapper
 
+
 @check_upper
 @check_digits
 @character_limit
 def password_checker(password: str) -> str:
     return f"Good, your password is {password} and it's good to go"
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/signup", methods=["POST"])
 def signup():
     name = request.form.get("name")
     password = request.form.get("password")
 
+
     user_data = {"user_name": name, "key_word": password, "first_time": True}
+
 
     try:
         with open("users.json", 'r') as f:
@@ -52,23 +61,30 @@ def signup():
     except (FileNotFoundError, json.JSONDecodeError):
         users = []
 
+
     for person in users:
         if name == person["user_name"]:
             return render_template("index.html", pass_result='', name_result="Username already taken")
+
+
+    pass_result = password_checker(password)
+
 
     users.append(user_data)
     with open("users.json", 'w') as f:
         json.dump(users, f)
 
-    pass_result = password_checker(password)
+
     return render_template("index.html", pass_result=pass_result)
+
 
 @app.route("/login", methods=["POST", "GET"])
 def check_login():
     if request.method == "POST":
         name = request.form.get("name")
         password = request.form.get("password")
-        user_data = {"user_name": name, "key_word": password, "first_time": False}
+        user_data = {"user_name": name, "key_word": password}
+
 
         try:
             with open("users.json", 'r') as f:
@@ -77,20 +93,30 @@ def check_login():
         except (FileNotFoundError, json.JSONDecodeError):
             users = []
 
+
         for person in users:
             if user_data["user_name"] == person["user_name"] and user_data["key_word"] == person["key_word"]:
+                if person["first_time"]:
+                    person["first_time"] = True
+                    
+                    with open("users.json", "w") as f:
+                        json.dump(users, f)
+
+                    return redirect(url_for("first_pick"))
+                
                 return render_template("login_page.html", out_put=f"Welcome back, {name}!")
 
+
         return render_template("login_page.html", out_put="This account doesn't exist")
-    
+   
+
 
     return render_template("login_page.html")
 
-# @app.route("/pick_character", methods=["POST"])
-# def first_pick():
-#     character_name = request.get("character_name")
 
-
+@app.route("/stats")
+def first_pick():
+    return render_template("stats.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
