@@ -80,6 +80,25 @@ body {
     }
 }
 
+.stat-range {
+    width: 200px;      
+    align-self: flex-start;  
+    margin-left: 20px; 
+}
+
+.stats-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; 
+}
+
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
 .input-box input {
     width: 380px;
@@ -143,3 +162,8 @@ button:hover {
     margin-top: 10px;
 
 }
+
+
+
+
+

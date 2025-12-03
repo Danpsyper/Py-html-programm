@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stats.css') }}">
+</head>
+<body>
+    <header class="stats-header">
+        <div class="container">
+            <h1 class="stat">Make your player</h1>
+        </div>
+    </header>
+
+    <main class="stats-main">
+        <form action="/stats">
+            <div class="slides">
+                <svg class="slide active">
+                    <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-person"></use>
+                </svg>
+
+                <svg class="slide">
+                    <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-knight"></use>
+                </svg>
+
+                <svg class="slide">
+                    <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-hunter"></use>
+                </svg>
+                <svg class="slide active">
+                    <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-alchemist"></use>
+                </svg>
+
+                <svg class="slide">
+                    <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-wizard"></use>
+                </svg>
+
+
+            </div>
+        </form>
+
+        <button class="prev">❮</button>
+        <button class="next">❯</button>
+
+
+
+
+        
+
+    </main>
+    <div>
+            <h2 id="rangeValue"></h2>
+            <div id="fillRangeValue"></div>
+            <input type="range" class="range" value="0" min="0" max="0" onmousemove="rangeSlider(this.value)">
+        </div>
+          <div>
+            <h2 id="rangeValue"></h2>
+            <div id="fillRangeValue"></div>
+            <input type="range" class="range" value="0" min="0" max="0" onmousemove="rangeSlider(this.value)">
+        </div>
+          <div>
+            <h2 id="rangeValue"></h2>
+            <div id="fillRangeValue"></div>
+            <input type="range" class="range" value="0" min="0" max="0" onmousemove="rangeSlider(this.value)">
+        </div>
+    <script type="module" src="{{ url_for('static', filename='stats.js') }}"></script>
+</body>
+</html>
