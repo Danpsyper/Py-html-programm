@@ -1,0 +1,130 @@
+
+.stats-main {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.stat {
+    font-size: 42px;
+    font-weight: 700;
+    color: #4e4e4e;
+    text-align: center;
+}
+
+.slides {
+    position: relative;
+    width: 180px;
+    height: 180px;
+}
+
+
+.slide {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    padding: 25px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity .4s ease, transform .4s ease;
+
+    fill: #ff7c47; 
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+.slide.slide-left {
+    transform: translateX(-40px);
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #ff9b72, #ff7c47);
+    color: #fff;
+    border: none;
+    font-size: 28px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50px;
+    user-select: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    transition: .2s;
+}
+
+.prev:hover, .next:hover {
+    transform: translateY(-50%) scale(1.05);
+}
+
+.prev {
+    left: 18%;
+}
+
+.next {
+    right: 18%;
+}
+
+
+@media (max-width: 600px) {
+    .slides {
+        width: 140px;
+        height: 140px;
+    }
+
+    .slide {
+        width: 140px;
+        height: 140px;
+        padding: 20px;
+    }
+}
+
+.slider-box {
+    width: 500px;
+    margin-bottom: 35px;
+    position: relative;
+}
+.slider-box {
+    width: 500px;
+    margin-bottom: 35px;
+    position: relative;
+}
+
+.range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 35px;
+    border-radius: 8px;
+    outline: none;
+    position: relative;
+    background: orange;
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+
+
+.value-inside {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    pointer-events: none;
+    z-index: 10;
+}
