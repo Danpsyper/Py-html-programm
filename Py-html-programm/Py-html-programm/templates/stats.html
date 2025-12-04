@@ -43,28 +43,24 @@
 
         <button class="prev">❮</button>
         <button class="next">❯</button>
-
-
-
-
-        
-
     </main>
     <div>
             <h2 id="rangeValue"></h2>
-            <div id="fillRangeValue"></div>
-            <input type="range" class="range" value="0" min="0" max="0" onmousemove="rangeSlider(this.value)">
-        </div>
-          <div>
-            <h2 id="rangeValue"></h2>
-            <div id="fillRangeValue"></div>
-            <input type="range" class="range" value="0" min="0" max="0" onmousemove="rangeSlider(this.value)">
-        </div>
-          <div>
-            <h2 id="rangeValue"></h2>
-            <div id="fillRangeValue"></div>
-            <input type="range" class="range" value="0" min="0" max="0" onmousemove="rangeSlider(this.value)">
-        </div>
+    <div class="slider-box">
+        <input type="range" class="range" min="0" max="100" value="{{ hp }}" name="hp">
+        <div class="value-inside">{{ hp }}</div>
+    </div>
+
+    <div class="slider-box">
+        <input type="range" class="range" min="0" max="100" value="{{ damage }}" name="damage">
+        <div class="value-inside">{{ damage }}</div>
+    </div>
+
+    <div class="slider-box">
+        <input type="range" class="range" min="0" max="100" value="{{ armor }}" name="armor">
+        <div class="value-inside">{{ armor }}</div>
+    </div>
+
     <script type="module" src="{{ url_for('static', filename='stats.js') }}"></script>
 </body>
 </html>

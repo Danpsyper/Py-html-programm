@@ -35,3 +35,13 @@ a {
   button {
     border: none;
   }
+
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 35px;
+    background: none;
+    border-radius: 3px;
+    cursor: none;
+}

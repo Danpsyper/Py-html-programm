@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import json
 
 
@@ -113,10 +113,14 @@ def check_login():
 
     return render_template("login_page.html")
 
-
 @app.route("/stats")
 def first_pick():
-    return render_template("stats.html")
+
+    hp = 80
+    damage = 0
+    armor = 30
+
+    return render_template("stats.html", hp=hp, damage=damage, armor=armor)
 
 if __name__ == "__main__":
     app.run(debug=True)
