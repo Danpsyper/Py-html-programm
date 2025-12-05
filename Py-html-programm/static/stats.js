@@ -1,11 +1,40 @@
 const slides = document.querySelectorAll('.slide');
 let index = 0;
+function loadStatsFromSlide(slide) {
+    const stats = ["hp", "damage", "armor", "stamina", "evade"];
+    stats.forEach(stat => {
+        const slider = document.querySelector(`input[name="${stat}"]`);
+        const text = slider.parentElement.querySelector(".value-inside");
+
+        slider.value = slide.dataset[stat];
+        text.textContent = slide.dataset[stat];
+
+        const r = 255;
+        const g = Math.floor(165 - (165 * (slider.value / 100)));
+        const b = 0;
+        slider.style.background = `rgb(${r}, ${g}, ${b})`;
+    });
+}
+
+function updateSliderColor(slider) {
+    const value = slider.value;
+    const r = 255;
+    const g = Math.floor(165 - (165 * (value / 100)));
+    const b = 0;
+    slider.style.background = `rgb(${r}, ${g}, ${b})`;
+}
 
 function showSlide(newIndex, direction) {
     slides.forEach(slide => slide.classList.remove('active', 'slide-left'));
-    if (direction === "left") slides[index].classList.add('slide-left');
+
+    if (direction === "left") {
+        slides[index].classList.add('slide-left');
+    }
+
     index = newIndex;
     slides[index].classList.add('active');
+
+    loadStatsFromSlide(slides[index]);
 }
 
 document.querySelector('.next').addEventListener('click', () => {
@@ -18,28 +47,17 @@ document.querySelector('.prev').addEventListener('click', () => {
     showSlide(newIndex, "left");
 });
 
-// Update slider color and send values to Python
 document.querySelectorAll(".slider-box").forEach(box => {
     const slider = box.querySelector(".range");
     const text = box.querySelector(".value-inside");
 
-    const updateSliderColor = () => {
-        const value = slider.value;
-        const r = 255;
-        const g = Math.floor(165 - (165 * (value / 100)));
-        const b = 0;
-        slider.style.background = `rgb(${r}, ${g}, ${b})`;
-    }
-
-    // Initialize
     text.textContent = slider.value;
-    updateSliderColor();
+    updateSliderColor(slider);
 
     slider.addEventListener("input", () => {
         text.textContent = slider.value;
-        updateSliderColor();
+        updateSliderColor(slider);
 
-        // Send updated value to Python
         const stats = {};
         document.querySelectorAll(".range").forEach(s => {
             stats[s.name] = s.value;
@@ -54,3 +72,5 @@ document.querySelectorAll(".slider-box").forEach(box => {
         .then(data => console.log("Saved:", data));
     });
 });
+
+loadStatsFromSlide(slides[index]);

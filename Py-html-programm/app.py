@@ -116,11 +116,11 @@ def check_login():
 @app.route("/stats")
 def first_pick():
 
-    hp = 80
-    damage = 20
-    armor = 40
-    stamina = 60
-    evade = 30
+    hp = 0
+    damage = 0
+    armor = 0
+    stamina = 0
+    evade = 0
 
     return render_template("stats.html", hp=hp, damage=damage, armor=armor, stamina=stamina, evade=evade)
 
