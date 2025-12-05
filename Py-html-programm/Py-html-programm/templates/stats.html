@@ -44,21 +44,33 @@
         <button class="prev">❮</button>
         <button class="next">❯</button>
     </main>
-    <div>
-            <h2 id="rangeValue"></h2>
+    <div class="line">
+
+            <h3 class="stats-name">Health</h3>
     <div class="slider-box">
         <input type="range" class="range" min="0" max="100" value="{{ hp }}" name="hp">
         <div class="value-inside">{{ hp }}</div>
+        
     </div>
-
+<h3 class="stats-name">Damage</h3>
     <div class="slider-box">
         <input type="range" class="range" min="0" max="100" value="{{ damage }}" name="damage">
         <div class="value-inside">{{ damage }}</div>
     </div>
-
+<h3 class="stats-name">Armor</h3>
     <div class="slider-box">
         <input type="range" class="range" min="0" max="100" value="{{ armor }}" name="armor">
         <div class="value-inside">{{ armor }}</div>
+    </div>
+    <h3 class="stats-name">Stamina</h3>
+    <div class="slider-box">
+        <input type="range" class="range" min="0" max="100" value="{{ stamina }}" name="damage">
+        <div class="value-inside">{{ stamina }}</div>
+    </div>
+<h3 class="stats-name">Evade</h3>
+    <div class="slider-box">
+        <input type="range" class="range" min="0" max="100" value="{{ evade }}" name="armor">
+        <div class="value-inside">{{ evade }}</div>
     </div>
 
     <script type="module" src="{{ url_for('static', filename='stats.js') }}"></script>

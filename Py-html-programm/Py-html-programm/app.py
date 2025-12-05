@@ -117,10 +117,12 @@ def check_login():
 def first_pick():
 
     hp = 80
-    damage = 0
-    armor = 30
+    damage = 20
+    armor = 40
+    stamina = 60
+    evade = 30
 
-    return render_template("stats.html", hp=hp, damage=damage, armor=armor)
+    return render_template("stats.html", hp=hp, damage=damage, armor=armor, stamina=stamina, evade=evade)
 
 if __name__ == "__main__":
     app.run(debug=True)

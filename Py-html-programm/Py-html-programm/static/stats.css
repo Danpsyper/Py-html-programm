@@ -92,15 +92,11 @@
 }
 
 .slider-box {
-    width: 500px;
-    margin-bottom: 35px;
+    width: 50%;
+    margin-bottom: 15px;
     position: relative;
 }
-.slider-box {
-    width: 500px;
-    margin-bottom: 35px;
-    position: relative;
-}
+
 
 .range {
     -webkit-appearance: none;
@@ -119,6 +115,9 @@
 
 .value-inside {
     position: absolute;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 50px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -127,4 +126,10 @@
     color: white;
     pointer-events: none;
     z-index: 10;
+
+}
+
+
+.line {
+    padding-top: 100px;
 }
