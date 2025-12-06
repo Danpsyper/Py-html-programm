@@ -49,34 +49,55 @@
         <button class="prev">❮</button>
         <button class="next">❯</button>
     </main>
-    <div class="line">
+<div class="big-stats-box">
+
+    <div class="stats-columns">
+
+        <!-- Левая колонка -->
+        <div class="left-column">
 
             <h3 class="stats-name">Health</h3>
-    <div class="slider-box">
-        <input type="range" class="range" min="0" max="100" value="0" name="hp">
-        <div class="value-inside">0</div>
-        
+            <div class="slider-box">
+                <input type="range" class="range" min="0" max="100" value="{{ hp }}" name="hp">
+                <div class="value-inside">{{ hp }}</div>
+            </div>
+
+            <h3 class="stats-name">Damage</h3>
+            <div class="slider-box">
+                <input type="range" class="range" min="0" max="100" value="{{ damage }}" name="damage">
+                <div class="value-inside">{{ damage }}</div>
+            </div>
+
+            <h3 class="stats-name">Armor</h3>
+            <div class="slider-box">
+                <input type="range" class="range" min="0" max="100" value="{{ armor }}" name="armor">
+                <div class="value-inside">{{ armor }}</div>
+            </div>
+
+            <h3 class="stats-name">Stamina</h3>
+            <div class="slider-box">
+                <input type="range" class="range" min="0" max="100" value="{{ stamina }}" name="stamina">
+                <div class="value-inside">{{ stamina }}</div>
+            </div>
+
+            <h3 class="stats-name">Evade</h3>
+            <div class="slider-box">
+                <input type="range" class="range" min="0" max="100" value="{{ evade }}" name="evade">
+                <div class="value-inside">{{ evade }}</div>
+            </div>
+
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="right-column">
+            <input placeholder="Nickname" type="text" name="name" required>
+            <button class="start-game-btn">Play</button>
+        </div>
+
     </div>
-<h3 class="stats-name">Damage</h3>
-    <div class="slider-box">
-        <input type="range" class="range" min="0" max="100" value="0" name="damage">
-        <div class="value-inside">0</div>
-    </div>
-<h3 class="stats-name">Armor</h3>
-    <div class="slider-box">
-        <input type="range" class="range" min="0" max="100" value="0" name="armor">
-        <div class="value-inside">0</div>
-    </div>
-    <h3 class="stats-name">Stamina</h3>
-    <div class="slider-box">
-        <input type="range" class="range" min="0" max="100" value="0" name="stamina">
-        <div class="value-inside">0</div>
-    </div>
-<h3 class="stats-name">Evade</h3>
-    <div class="slider-box">
-        <input type="range" class="range" min="0" max="100" value="0" name="evade">
-        <div class="value-inside">0</div>
-    </div>
+
+</div>
+
 
 
     <script type="module" src="{{ url_for('static', filename='stats.js') }}"></script>
