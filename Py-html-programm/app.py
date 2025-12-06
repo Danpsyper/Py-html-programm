@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import json
 
 
 app = Flask(__name__)
-
+app.secret_key = "Timberlake"
 
 def character_limit(func):
     def wrapper(password):
@@ -74,6 +74,7 @@ def signup():
     with open("users.json", 'w') as f:
         json.dump(users, f)
 
+    session["user_name"] = name
 
     return render_template("index.html", pass_result=pass_result)
 
@@ -101,9 +102,11 @@ def check_login():
                     
                     with open("users.json", "w") as f:
                         json.dump(users, f)
+                    
+                    session["user_name"] = name
 
                     return redirect(url_for("first_pick"))
-                
+
                 return render_template("login_page.html", out_put=f"Welcome back, {name}!")
 
 
@@ -113,16 +116,29 @@ def check_login():
 
     return render_template("login_page.html")
 
-@app.route("/stats")
+@app.route("/stats", methods=['POST', 'GET'])
 def first_pick():
+    if request.method == "POST":
+        char_name = request.form.get("char_name")
+        username = session.get("user_name")
 
-    hp = 0
-    damage = 0
-    armor = 0
-    stamina = 0
-    evade = 0
-
-    return render_template("stats.html", hp=hp, damage=damage, armor=armor, stamina=stamina, evade=evade)
+        try:
+            with open("users.json", 'r') as f:
+                    content = f.read().strip()
+                    users = json.loads(content) if content else []
+        except (FileNotFoundError, json.JSONDecodeError):
+                users = []
+        for user in users:
+            if user["user_name"] == username:
+                user["char_name"] = char_name
+                break
+            
+        with open("users.json", 'w') as f:
+            json.dump(users, f)
+        
+        return render_template("stats.html")
+    
+    return render_template("stats.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

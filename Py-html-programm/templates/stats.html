@@ -53,7 +53,6 @@
 
     <div class="stats-columns">
 
-        <!-- Левая колонка -->
         <div class="left-column">
 
             <h3 class="stats-name">Health</h3>
@@ -88,10 +87,11 @@
 
         </div>
 
-        <!-- Правая колонка -->
         <div class="right-column">
-            <input placeholder="Nickname" type="text" name="name" required>
-            <button class="start-game-btn">Play</button>
+            <form  action="/stats" method="POST" class="form">
+                <input placeholder="Nickname" type="text" name="char_name" required>
+                <button class="start-game-btn">Play</button>
+                </form>
         </div>
 
     </div>
