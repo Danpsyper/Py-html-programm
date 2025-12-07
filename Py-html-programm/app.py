@@ -121,6 +121,12 @@ def first_pick():
     if request.method == "POST":
         char_name = request.form.get("char_name")
         username = session.get("user_name")
+        class_name = request.form.get("class")
+        hp = int(request.form.get("hp"))
+        damage = int(request.form.get("damage"))
+        armor = int(request.form.get("armor"))
+        stamina = int(request.form.get("stamina"))
+        evade = int(request.form.get("evade"))
 
         try:
             with open("users.json", 'r') as f:
@@ -128,9 +134,16 @@ def first_pick():
                     users = json.loads(content) if content else []
         except (FileNotFoundError, json.JSONDecodeError):
                 users = []
+        
         for user in users:
             if user["user_name"] == username:
                 user["char_name"] = char_name
+                user["class"] = class_name
+                user["hp"] = hp
+                user["damage"] = damage
+                user["armor"] = armor
+                user["stamina"] = stamina
+                user["evade"] = evade
                 break
             
         with open("users.json", 'w') as f:

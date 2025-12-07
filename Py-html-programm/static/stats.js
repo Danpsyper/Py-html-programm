@@ -1,19 +1,52 @@
 const slides = document.querySelectorAll('.slide');
 let index = 0;
+
+const classField = document.getElementById("class-field");
+const form = document.querySelector(".form");
+let sendTimeout;
+
+function sendStats() {
+    const stats = {};
+    document.querySelectorAll(".range").forEach(slider => {
+        stats[slider.name] = slider.value;
+
+        const hiddenInput = document.querySelector(`input[name="${slider.name}"][type="hidden"]`);
+        if (hiddenInput) hiddenInput.value = slider.value;
+    });
+
+    if (classField) {
+        classField.value = document.querySelector(".slide.active").dataset.class;
+    }
+
+    const formData = new FormData();
+    Object.entries(stats).forEach(([key, value]) => formData.append(key, value));
+
+    fetch("/save_stats", {
+        method: "POST",
+        body: formData
+    });
+}
+
 function loadStatsFromSlide(slide) {
     const stats = ["hp", "damage", "armor", "stamina", "evade"];
+
+    if (classField) {
+        classField.value = slide.dataset.class;
+    }
+
     stats.forEach(stat => {
         const slider = document.querySelector(`input[name="${stat}"]`);
         const text = slider.parentElement.querySelector(".value-inside");
 
         slider.value = slide.dataset[stat];
         text.textContent = slide.dataset[stat];
+        updateSliderColor(slider);
 
-        const r = 255;
-        const g = Math.floor(165 - (165 * (slider.value / 100)));
-        const b = 0;
-        slider.style.background = `rgb(${r}, ${g}, ${b})`;
+        const hiddenInput = document.querySelector(`input[name="${stat}"][type="hidden"]`);
+        if (hiddenInput) hiddenInput.value = slide.dataset[stat];
     });
+
+    sendStats();
 }
 
 function updateSliderColor(slider) {
@@ -25,10 +58,12 @@ function updateSliderColor(slider) {
 }
 
 function showSlide(newIndex, direction) {
-    slides.forEach(slide => slide.classList.remove('active', 'slide-left'));
+    slides.forEach(slide => slide.classList.remove('active', 'slide-left', 'slide-right'));
 
     if (direction === "left") {
         slides[index].classList.add('slide-left');
+    } else if (direction === "right") {
+        slides[index].classList.add('slide-right');
     }
 
     index = newIndex;
@@ -58,19 +93,15 @@ document.querySelectorAll(".slider-box").forEach(box => {
         text.textContent = slider.value;
         updateSliderColor(slider);
 
-        const stats = {};
-        document.querySelectorAll(".range").forEach(s => {
-            stats[s.name] = s.value;
-        });
-
-        fetch("/save_stats", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(stats)
-        })
-        .then(res => res.json())
-        .then(data => console.log("Saved:", data));
+        clearTimeout(sendTimeout);
+        sendTimeout = setTimeout(sendStats, 150);
     });
 });
+
+if (form) {
+    form.addEventListener("submit", () => {
+        sendStats();
+    });
+}
 
 loadStatsFromSlide(slides[index]);
