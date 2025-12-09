@@ -201,3 +201,12 @@ body {
     margin-top: 8px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.class-text {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-top: 20px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

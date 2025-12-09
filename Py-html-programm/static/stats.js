@@ -30,6 +30,9 @@ function sendStats() {
 function loadStatsFromSlide(slide) {
     const stats = ["hp", "damage", "armor", "stamina", "evade"];
 
+    // 🔥 ТЕКСТ МЕНЯЕТСЯ ТУТ
+    document.getElementById("classText").textContent = slide.dataset.class;
+
     if (classField) {
         classField.value = slide.dataset.class;
     }

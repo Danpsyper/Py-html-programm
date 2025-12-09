@@ -16,43 +16,48 @@
     </header>
 
     <main class="stats-main">
+
         <div class="slides">
 
             <svg class="slide active"
                 data-hp="30" data-damage="30" data-armor="10" data-stamina="40" data-evade="50"
-                data-class="person">
+                data-class="Person">
                 <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-person"></use>
             </svg>
 
             <svg class="slide"
                 data-hp="60" data-damage="30" data-armor="40" data-stamina="20" data-evade="10"
-                data-class="knight">
+                data-class="Knight">
                 <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-knight"></use>
             </svg>
 
             <svg class="slide"
                 data-hp="50" data-damage="40" data-armor="20" data-stamina="30" data-evade="40"
-                data-class="hunter">
+                data-class="Hunter">
                 <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-hunter"></use>
             </svg>
 
             <svg class="slide"
                 data-hp="30" data-damage="60" data-armor="10" data-stamina="30" data-evade="30"
-                data-class="alchemist">
+                data-class="Alchemist">
                 <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-alchemist"></use>
             </svg>
 
             <svg class="slide"
                 data-hp="40" data-damage="60" data-armor="10" data-stamina="20" data-evade="20"
-                data-class="wizard">
+                data-class="Wizard">
                 <use href="{{ url_for('static', filename='img/symbol-defs.svg') }}#icon-wizard"></use>
             </svg>
 
         </div>
 
+        <!-- 💬 ВОТ ЭТО ДОБАВЛЕНО -->
+        
+
         <button class="prev">❮</button>
         <button class="next">❯</button>
     </main>
+            <div class="class-text" id="classText">Person</div>
 
 <div class="big-stats-box">
     <div class="stats-columns">
@@ -96,10 +101,9 @@
 
                 <input placeholder="Nickname" type="text" name="char_name" required>
 
-                <!-- hidden input for class (added invisibly, does not change layout) -->
+                <!-- hidden input for class -->
                 <input type="hidden" name="class" id="class-field">
 
-                <!-- hidden inputs for stats (so Flask receives them) -->
                 <input type="hidden" name="hp">
                 <input type="hidden" name="damage">
                 <input type="hidden" name="armor">
@@ -113,7 +117,6 @@
     </div>
 </div>
 
-<!-- minimal invisible fix -->
 <script>
     let selectedClassName = document.querySelector(".slide.active").dataset.class;
 </script>
