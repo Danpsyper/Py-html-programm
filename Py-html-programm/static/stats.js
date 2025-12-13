@@ -7,19 +7,27 @@ let sendTimeout;
 
 function sendStats() {
     const stats = {};
+
     document.querySelectorAll(".range").forEach(slider => {
         stats[slider.name] = slider.value;
 
-        const hiddenInput = document.querySelector(`input[name="${slider.name}"][type="hidden"]`);
+        const hiddenInput = document.querySelector(
+            `input[name="${slider.name}"][type="hidden"]`
+        );
         if (hiddenInput) hiddenInput.value = slider.value;
     });
 
     if (classField) {
-        classField.value = document.querySelector(".slide.active").dataset.class;
+        const activeSlide = document.querySelector(".slide.active");
+        if (activeSlide) {
+            classField.value = activeSlide.dataset.class;
+        }
     }
 
     const formData = new FormData();
-    Object.entries(stats).forEach(([key, value]) => formData.append(key, value));
+    Object.entries(stats).forEach(([key, value]) =>
+        formData.append(key, value)
+    );
 
     fetch("/save_stats", {
         method: "POST",
@@ -30,8 +38,10 @@ function sendStats() {
 function loadStatsFromSlide(slide) {
     const stats = ["hp", "damage", "armor", "stamina", "evade"];
 
-    // 🔥 ТЕКСТ МЕНЯЕТСЯ ТУТ
-    document.getElementById("classText").textContent = slide.dataset.class;
+    const classText = document.getElementById("classText");
+    if (classText) {
+        classText.textContent = slide.dataset.class;
+    }
 
     if (classField) {
         classField.value = slide.dataset.class;
@@ -45,7 +55,9 @@ function loadStatsFromSlide(slide) {
         text.textContent = slide.dataset[stat];
         updateSliderColor(slider);
 
-        const hiddenInput = document.querySelector(`input[name="${stat}"][type="hidden"]`);
+        const hiddenInput = document.querySelector(
+            `input[name="${stat}"][type="hidden"]`
+        );
         if (hiddenInput) hiddenInput.value = slide.dataset[stat];
     });
 
@@ -57,30 +69,33 @@ function updateSliderColor(slider) {
     const r = 255;
     const g = Math.floor(165 - (165 * (value / 100)));
     const b = 0;
+
     slider.style.background = `rgb(${r}, ${g}, ${b})`;
 }
 
 function showSlide(newIndex, direction) {
-    slides.forEach(slide => slide.classList.remove('active', 'slide-left', 'slide-right'));
+    slides.forEach(slide =>
+        slide.classList.remove("active", "slide-left", "slide-right")
+    );
 
     if (direction === "left") {
-        slides[index].classList.add('slide-left');
+        slides[index].classList.add("slide-left");
     } else if (direction === "right") {
-        slides[index].classList.add('slide-right');
+        slides[index].classList.add("slide-right");
     }
 
     index = newIndex;
-    slides[index].classList.add('active');
+    slides[index].classList.add("active");
 
     loadStatsFromSlide(slides[index]);
 }
 
-document.querySelector('.next').addEventListener('click', () => {
+document.querySelector(".next").addEventListener("click", () => {
     const newIndex = (index + 1) % slides.length;
     showSlide(newIndex, "right");
 });
 
-document.querySelector('.prev').addEventListener('click', () => {
+document.querySelector(".prev").addEventListener("click", () => {
     const newIndex = (index - 1 + slides.length) % slides.length;
     showSlide(newIndex, "left");
 });
@@ -108,3 +123,4 @@ if (form) {
 }
 
 loadStatsFromSlide(slides[index]);
+

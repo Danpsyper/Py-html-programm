@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Flask App</title>
+    <title>Sign up</title>
    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
      <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -9,7 +9,7 @@
     <header class="register-header">
    <div class="container">
         <form  action="/signup" method="POST" class="form">
-            <h2>Create Account</h2>
+            <h2>Create an account</h2>
 
             {% if name_result or pass_result %}
             <p class="error-message">{{ name_result or pass_result }}</p>
