@@ -3,82 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Battle</title>
+    <title>Battle Game</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #1e1e1e; color: #f5f5f5; margin: 0; padding: 20px; }
-        .stats, .enemy, .actions, .dialogue, .battle-log { margin-bottom: 20px; padding: 10px; border: 1px solid #444; border-radius: 8px; background-color: #2c2c2c; }
-        .actions button { margin-right: 10px; padding: 10px 20px; background-color: #4CAF50; border: none; color: white; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        .actions button:hover { background-color: #45a049; }
-        .battle-log { max-height: 200px; overflow-y: auto; }
-        .dialogue { font-style: italic; }
-        h2 { margin-top: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #eee;
+            padding: 20px;
+        }
+        .stats, .enemy-stats {
+            margin-bottom: 20px;
+        }
+        .battle-log {
+            background-color: #111;
+            border: 1px solid #555;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .actions button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .dialogue {
+            background-color: #333;
+            border: 1px solid #666;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .disabled {
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
-    <h1>RPG Battle</h1>
+    <h1>Battle Game</h1>
 
-    <!-- Player Stats -->
     <div class="stats">
-        <h2>Player Stats</h2>
-        <p>HP: {{ hp }}</p>
-        <p>Stamina: {{ stamina }}</p>
+        <p>HP: {{ hp }} / {{ user.max_hp }}</p>
+        <p>Stamina: {{ stamina }} / {{ user.max_stamina }}</p>
         <p>Damage: {{ damage }}</p>
         <p>Armor: {{ armor }}</p>
-        <p>Evade: {{ evade }}</p>
+        <p>Evade: {{ evade }}%</p>
     </div>
 
-    <!-- Enemy Stats -->
     {% if enemy_name %}
-    <div class="enemy">
+    <div class="enemy-stats">
         <h2>Enemy: {{ enemy_name }}</h2>
         <p>HP: {{ enemy_health }}</p>
     </div>
     {% endif %}
 
-    <!-- Dialogue -->
     {% if dialogue_mode %}
     <div class="dialogue">
         <p>{{ current_line }}</p>
         <form method="POST">
-            <input type="hidden" name="action" value="next_line">
-            <button type="submit">Next</button>
+            <button type="submit" name="action" value="next_line">Next</button>
         </form>
     </div>
-    {% endif %}
-
-    <!-- Battle Actions -->
-    {% if not dialogue_mode and player_turn %}
+    {% else %}
     <div class="actions">
-        <form method="POST" style="display:inline;">
-            <input type="hidden" name="action" value="attack">
-            <button type="submit">Attack</button>
-        </form>
-        <form method="POST" style="display:inline;">
-            <input type="hidden" name="action" value="defend">
-            <button type="submit">Defend</button>
-        </form>
-        <form method="POST" style="display:inline;">
-            <input type="hidden" name="action" value="rest">
-            <button type="submit">Rest</button>
+        <form method="POST">
+            <button type="submit" name="action" value="attack" {% if stamina < 5 %}disabled class="disabled"{% endif %}>Attack</button>
+            <button type="submit" name="action" value="defend">Defend</button>
+            <button type="submit" name="action" value="rest">Rest</button>
+            <button type="submit" name="action" value="special"
+                {% if (user.class == 'hunter' and stamina < 5) or
+                       (user.class == 'wizard' and stamina >= user.max_stamina) %}
+                disabled class="disabled"{% endif %}>
+                Special
+            </button>
         </form>
     </div>
     {% endif %}
 
-    <!-- Battle Log -->
     <div class="battle-log">
-        <h2>Battle Log</h2>
-        {% for entry in battle_log %}
-            <p>{{ entry }}</p>
+        <h3>Battle Log:</h3>
+        {% for line in battle_log %}
+            <p>{{ line }}</p>
         {% endfor %}
     </div>
 
-    <!-- Automatic Enemy Turn Button (if delayed) -->
-    {% if not dialogue_mode and not player_turn and enemy_name %}
-    <form method="POST">
-        <input type="hidden" name="action" value="enemy_turn">
-        <button type="submit">Enemy Turn</button>
-    </form>
+    {% if not enemy_name and not dialogue_mode %}
+        <p>You have defeated all enemies!</p>
     {% endif %}
-
 </body>
 </html>
